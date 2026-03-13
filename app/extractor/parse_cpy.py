@@ -8,11 +8,11 @@ def extract_form16_data(filepath):
     # print(text)
     certificate_no = extract_certificate_no(text)
     assessment_year = extract_assessment_year(text)
-    period = extract_employment_period(text)
+    # period = extract_employment_period(text)
 
     print("Certificate No:", certificate_no)
     print("Assessment Year:", assessment_year)
-    print("Employment Period:", period)
+    # print("Employment Period:", period)
 
     employer_name = find(
         r"([A-Z\s]+PRIVATE LIMITED)",
@@ -36,11 +36,14 @@ def extract_form16_data(filepath):
 
     return {
 
+        "certificate_no": certificate_no,
+        "assessment_year": assessment_year,
         "employer_name": employer_name,
         "employer_pan": employer_pan,
         "employer_tan": employer_tan,
         "employee_pan": employee_pan,
-        "salary_details": extract_salary_fields(text)
+        "salary_details": extract_salary_fields(text),
+        
     }
 
 def extract_certificate_no(text):
