@@ -1,8 +1,6 @@
 import pdfplumber
 import re
 
-
-
 def extract_form16_data(filepath):
     text = extract_text(filepath)
     # print(text)
@@ -50,11 +48,9 @@ def extract_certificate_no(text):
     m = re.search(r"Certificate (?:No\.|Number:)\s*([A-Z0-9]+)", text)
     return m.group(1) if m else None
 
-
 def extract_assessment_year(text):
     m = re.search(r"Assessment Year\s*[:]*\s*(\d{4}-\d{2})", text)
     return m.group(1) if m else None
-
 
 def extract_employment_period(text):
     m = re.search(
@@ -129,7 +125,6 @@ def extract_salary_fields(text):
         "total_tds": total_tds
     }
 
-
 def find(pattern, text):
 
     m = re.search(pattern, text, re.DOTALL)
@@ -147,6 +142,3 @@ def extract_text(pdf_path):
             if t:
                 text += t + "\n"
     return text
-
-
-
