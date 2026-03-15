@@ -86,10 +86,23 @@ def extract_salary_fields(text):
     def num(pattern):
         m = re.search(pattern, text)
         return float(m.group(1)) if m else 0
-
-    gross_salary = num(
+    
+    salary_17_1 = num(
         r"Salary as per provisions contained in section 17\(1\)\s+([\d\.]+)"
     )
+
+    perquisites_17_2 = num(
+        r"Value of perquisites under section 17\(2\)[^\d]*([\d]+\.[\d]+)"
+    )
+
+    profits_17_3 = num(
+        r"Profits in lieu of salary under section 17\(3\).*?\s+([\d\.]+)"
+    )
+
+    # print(salary_17_1, perquisites_17_2, profits_17_3)
+
+    gross_salary = salary_17_1 + perquisites_17_2 + profits_17_3
+
 
     net_tax_payable = extract_net_tax(text)
 
@@ -116,7 +129,11 @@ def extract_salary_fields(text):
     )
 
     return {
+        "salary_17_1": salary_17_1,
+        "perquisites_17_2": perquisites_17_2,
+        "profits_17_3": profits_17_3,
         "gross_salary": gross_salary,
+        "balance": balance,
         "standard_deduction": standard_deduction,
         "income_from_salary": income_from_salary,
         "net_tax_payable": net_tax_payable,
